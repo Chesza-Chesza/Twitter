@@ -14,7 +14,7 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-dark bg-warning">
+    <nav class="navbar navbar-dark">
     <% if current_user %>
       <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
     <% end %>
@@ -26,10 +26,7 @@
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
-    <% if current_user %>
-      <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
-    <% end %>
-    
+   
     <%= yield %>
 
 
