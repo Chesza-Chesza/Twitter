@@ -18,9 +18,20 @@
           <li class="list-group-item"><%= tweet.content.truncate(150)  %></li>
           <li class="list-group-item text-muted">
             <small><%= time_ago_in_words(tweet.created_at) %> ago</small>
-            <%= link_to 'rt', create_rt_tweet_path(tweet), method: :post %>
-            <%= tweet.retweet&.id %>
-            <%= tweet.retweets.count %>
+            <% link_to 'rt', create_rt_tweet_path(tweet), method: :post %>
+            <% tweet.retweet&.id %>
+            <% tweet.retweets.count %>
+            <% link_to 'Like', tweets_path %>
+            <%= tweet.likes.count %> <%= (tweet.likes.count) == 1 ? 'Like' : 'Likes'%>
+            
+            <span>Retweets:<%= tweet.retweets.count %> </span>
+
+          <%= form_with(model: tweet, url: tweets_path, method: :post) do |form| %>
+           <%=form.hidden_field :retweeted, value: true %>
+           <%= form.hidden_field :id %>
+           <%= form.submit 'Retweet', class:"btn btn-primary pl-6 ml-5"%>
+          <% end %>
+
           </li>
         </ul>
         <!-- <% link_to 'Show', tweet, class: "btn btn-primary" %>
