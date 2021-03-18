@@ -26,7 +26,7 @@ class LikesController < ApplicationController
     @like = @tweet.likes.build(user: current_user)
 
       if @like.save
-        redirect_to @tweet, notice: "Like was successfully created."
+        redirect_to tweets_path, notice: "Like was successfully created."
       else
         render @like.errors, status: :unprocessable_entity
       end

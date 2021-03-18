@@ -20,20 +20,23 @@
           </li>
 
           <li class="list-group-item"><%= link_to(image_tag(tweet.image), tweet) if tweet.image? %></li>
+                    
           <li class="list-group-item"><%= tweet.content.truncate(150)  %></li>
           <li class="list-group-item text-muted">
             <small><%= time_ago_in_words(tweet.created_at) %> ago</small>
             <% link_to 'rt', create_rt_tweet_path(tweet), method: :post %>
             <% tweet.retweet&.id %>
             <% tweet.retweets.count %>
+
             <!--LIKES -->
             <%= tweet.likes.count %> <%= (tweet.likes.count) == 1 ? 'Like' : 'Likes'%>
-            <% like = @tweet.likes.where user: current_user %> 
+            <% like = tweet.likes.where user: current_user %> 
             <% if like.present? %>
-              <%= link_to 'unlike', tweet_like_path(tweet, like), method: :delete %>
+              <%= link_to 'unlike', tweet_like_path(tweet, like.first), method: :delete %>
             <% else %>
-              <%= link_to 'Like', tweet_likes_path(tweet, like), method: :post %>
+              <%= link_to 'Like', tweet_likes_path(tweet, like.first), method: :post %>
             <% end %> 
+
             <!-- Retweet -->
             <span>Retweets:<%= tweet.retweets.count %> </span>
 

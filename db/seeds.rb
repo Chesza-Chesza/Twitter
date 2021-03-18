@@ -19,4 +19,4 @@ User.destroy_all
       tweet = Tweet.create!(content: Faker::Twitter.status[:text], user: user)
       puts "The #{tweet.id} was created"
   end    
-end
+endAdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

@@ -7,10 +7,10 @@ class FriendsController < ApplicationController
 
       if @friend.save
         flash[:alert] = 'Friend was added successfully'
-        redirect_to user_profile_path(@friend_user)
+        redirect_to user_path(@friend_user)
       else
         flash[:alert] = 'Something happened, try again'
-        redirect_to user_profile_path(@friend_user)
+        redirect_to user_path(@friend_user)
       end
   end
 
@@ -19,10 +19,10 @@ class FriendsController < ApplicationController
       @friend = Friend.where(user_id: current_user.id, friend_id: params[:id]).first
       if @friend.destroy
         flash[:alert] = 'Friend was deleted successfully".'
-        redirect_to user_profile_path(@friend_user)
+        redirect_to user_path(@friend_user)
       else
         flash[:alert] = 'Something happened, try again'
-        redirect_to user_profile_path(@friend_user)
+        redirect_to user_path(@friend_user)
       end
   end
 end
