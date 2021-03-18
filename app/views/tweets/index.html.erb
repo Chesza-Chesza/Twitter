@@ -3,11 +3,11 @@
   <div class="tweet-cont">
     <h1>Tweets</h1>
 
-  <%= link_to 'Crear un nuevo Tweet', new_tweet_path, class:"btn btn-primary pl-6 ml-5" if user_signed_in? %>
+  <% if user_signed_in? %>
+    <%= link_to 'Crear un nuevo Tweet', new_tweet_path, class:"btn btn-primary pl-6 ml-5" %>
     <%= render 'form', tweet: @tweet %>
+  <% end %>
     
-  
-  
     <div class="card-body mb-3">
     <%= paginate @tweets %>
       <% @tweets.each do |tweet| %>
@@ -26,9 +26,14 @@
             <% link_to 'rt', create_rt_tweet_path(tweet), method: :post %>
             <% tweet.retweet&.id %>
             <% tweet.retweets.count %>
-            <% link_to 'Like', tweets_path %>
+            <!--LIKES -->
             <%= tweet.likes.count %> <%= (tweet.likes.count) == 1 ? 'Like' : 'Likes'%>
-            
+            <% like = @tweet.likes.where user: current_user %> 
+            <% if like.present? %>
+              <%= link_to 'unlike', tweets_like_path(@tweet, like.first), method: :delete %>
+            <% else %>
+              <%= link_to 'Like', tweets_path(@tweet), method: :post %>
+            <% end %> 
             <!-- Retweet -->
             <span>Retweets:<%= tweet.retweets.count %> </span>
 
