@@ -6,6 +6,7 @@ class LikesController < ApplicationController
   # GET /likes or /likes.json
   def index
     @likes = Like.all
+  
   end
 
   # GET /likes/1 or /likes/1.json
@@ -15,6 +16,7 @@ class LikesController < ApplicationController
   # GET /likes/new
   def new
     @like = Like.new
+    user_id = current_user
   end
 
   # GET /likes/1/edit
@@ -23,6 +25,7 @@ class LikesController < ApplicationController
 
   # POST /likes or /likes.json
   def create
+
     @like = Like.new(like_params)
     if already_liked?
       flash[:notice] = "You can't like more than once"
@@ -55,17 +58,16 @@ class LikesController < ApplicationController
 
   # DELETE /likes/1 or /likes/1.json
   def destroy
-    if !(already_liked?)
+    respond_to do |format|
+      format.html { redirect_to likes_url, notice: "Like was successfully destroyed." }
+      format.json { head :no_content }
+      if !(already_liked?)
       flash[:notice] = "Cannot unlike"
-    else
+      else
       @like.destroy
+      end
     end
-    
-    #respond_to do |format|
-      #format.html { redirect_to likes_url, notice: "Like was successfully destroyed." }
-      #format.json { head :no_content }
-    #end
-  end
+end
 
   private
   # Use callbacks to share common setup or constraints between actions.

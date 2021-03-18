@@ -4,10 +4,12 @@ class TweetsController < ApplicationController
   # GET /tweets or /tweets.json
   def index
     @tweets = Tweet.all.page(params[:page])
+    tweet: @tweet
   end
 
   # GET /tweets/1 or /tweets/1.json
   def show
+    
   end
 
   # GET /tweets/new
@@ -59,14 +61,14 @@ class TweetsController < ApplicationController
   def create_rt
     create_rt = params[:tweet][:retweeted]
     tweet_id = params[:tweet][:id] 
-    
+
     if create_rt
       original_tweet_content = Tweet.find(tweet_id).content
       @tweet.retweeted = true
       @tweet.original_tweet_id = tweet_id
       @tweet.contents = original_tweet_content
     end
-    
+
     if @tweet.save
       flash[:alert] = "Se creo exitosamente"
       redirect_to root_path
