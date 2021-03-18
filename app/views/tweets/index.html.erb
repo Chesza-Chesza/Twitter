@@ -3,7 +3,10 @@
   <div class="tweet-cont">
     <h1>Tweets</h1>
 
+  <%= link_to 'Crear un nuevo Tweet', new_tweet_path, class:"btn btn-primary pl-6 ml-5" if user_signed_in? %>
     <%= render 'form', tweet: @tweet %>
+    
+  
   
     <div class="card-body mb-3">
     <%= paginate @tweets %>
@@ -11,7 +14,7 @@
         <ul>
           <li class="list-group-item">
           <%= link_to "#" do%>
-            <%= image_tag current_user.picture.nil? ? 'icon.png' : current_user.picture %>
+            <img class="m-3 rounded" src="<%= tweet.user.picture %> " alt="image_user" style="weigth: 70px; height: 70px;">
             <%= tweet.user.name %>
           <% end %>
           </li>
@@ -29,14 +32,15 @@
             <!-- Retweet -->
             <span>Retweets:<%= tweet.retweets.count %> </span>
 
-          <%= form_with(model: tweet, url: tweets_path, method: :post) do |form| %>
-           <%=form.hidden_field :retweeted, value: true %>
-           <%= form.hidden_field :id %>
-           <%= form.submit 'Retweet', class:"btn btn-primary pl-6 ml-5"%>
+            <%= form_with(model: tweet, url: tweets_path, method: :post) do |form| %>
+            <%=form.hidden_field :retweeted, value: true %>
+            <%= form.hidden_field :id %>
+            <%= form.submit 'Retweet', class:"btn btn-primary pl-6 ml-5"%>
           <% end %>
 
           </li>
         </ul>
+        
         <!-- <% link_to 'Show', tweet, class: "btn btn-primary" %>
         <% link_to 'Edit', edit_tweet_path(tweet) %> -->
         <% link_to 'Eliminar', tweet, method: :delete, data: { confirm: 'Are you  sure?' } %>
