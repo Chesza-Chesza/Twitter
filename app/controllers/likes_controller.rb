@@ -25,31 +25,15 @@ class LikesController < ApplicationController
   def create
     @like = @tweet.likes.build(user: current_user)
 
-    respond_to do |format|
       if @like.save
-        format.html { redirect_to @tweet, notice: "Like was successfully created." }
-        format.json { render :show, status: :created, location: @like }
+        redirect_to @tweet, notice: "Like was successfully created."
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @like.errors, status: :unprocessable_entity }
+        render @like.errors, status: :unprocessable_entity
       end
-    end
+    
   end
 
-  # PATCH/PUT /likes/1 or /likes/1.json
-  def update
-    respond_to do |format|
-      if @like.update(like_params)
-        format.html { redirect_to @like, notice: "Like was successfully updated." }
-        format.json { render :show, status: :ok, location: @like }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @like.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /likes/1 or /likes/1.json
+    # DELETE /likes/1 or /likes/1.json
   def destroy
     respond_to do |format|
       format.html { redirect_to @tweet, notice: "Like was successfully destroyed." }

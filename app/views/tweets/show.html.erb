@@ -22,7 +22,7 @@
 <%= link_to 'Back', tweets_path %> |
 <% like = @tweet.likes.where user: current_user %> 
 <% if like.present? %>
-  <%= link_to 'unlike', tweets_like_path(@tweet, like.first), method: :delete %>
+  <%= link_to 'unlike', tweet_like_path(@tweet, like.first), method: :delete %>
 <% else %>
   <%= link_to 'Like', tweet_likes_path(@tweet), method: :post %>
 <% end %>
