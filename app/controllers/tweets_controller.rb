@@ -3,11 +3,19 @@ class TweetsController < ApplicationController
 
   # GET /tweets or /tweets.json
   def index
-    @tweets = Tweet.all.page(params[:page])
-    @tweet = Tweet.new #Crea un tweet en blanco
- 
-    @friends_ids = current_user.friends.pluck(:id)
-    @friends_ids << current_user.id 
+    if current_user
+      @tweet = Tweet.new #Crea un tweet en blanco
+      @friends_ids = current_user.friends.pluck(:id)
+      @friends_ids << current_user.id #hace .push
+      @tweets = User.tweets_for_me(@friends_ids).order(created_at: :desc).page(params[:page]).per(50)
+    else
+      @tweets = Tweet.all.page(params[:page]).per(50)
+    end
+    
+    @q = params[:q]
+      if @q
+        @tweets = @tweets.where(:content => @q).page(params[:page]).per(50)
+      end
   end
 
   # GET /tweets/1 or /tweets/1.json
@@ -89,6 +97,6 @@ class TweetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tweet_params
-      params.require(:tweet).permit(:content, :image, :user_id, :name, :page, :retweet_id, :id)
+      params.require(:tweet).permit(:content, :image, :user_id, :name, :page, :retweet_id, :id, :friends_ids)
     end
 end
