@@ -14,13 +14,13 @@ class TweetsController < ApplicationController
     
     @q = params[:q]
       if @q
-        @tweets = @tweets.where(:content => @q).page(params[:page]).per(50)
+        @tweets = @tweets.where('content ilike ?', "%#{@q}%").page(params[:page]).per(50)
       end
   end
 
   # GET /tweets/1 or /tweets/1.json
   def show
-    
+    @users = User.all
   end
 
   # GET /tweets/new
@@ -79,7 +79,7 @@ class TweetsController < ApplicationController
       @tweet.original_tweet_id = tweet_id
       @tweet.contents = original_tweet_content
     end
-
+    
     if @tweet.save
       flash[:alert] = "Se creo exitosamente"
       redirect_to root_path

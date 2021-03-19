@@ -3,19 +3,21 @@
   <%= @q %>
   <div class="tweet-cont">
     <h1>Tweets</h1>
+
     <form>
-      <input name="q" <%= @q %>> 
+      <input name="q" <%= @q %>>
+      <!--<% link_to 'Hashtags', tweets_path %> -->
       <button type="submit">Search</button>
     </form>
+
+  <%= paginate @tweets %>
 
   <% if user_signed_in? %>
     <%= link_to 'Crear un nuevo Tweet', new_tweet_path, class:"btn btn-primary pl-6 ml-5" %>
     <%= render 'form', tweet: @tweet %>
   <% end %>
     
-    <div class="card-body mb-3">
-    <%= paginate @tweets %>
-    
+    <div class="card-body my-5">
       
       <% @tweets.each do |tweet| %>
         <ul>
@@ -30,7 +32,7 @@
                     
           <li class="list-group-item"><%= tweet.content.truncate(150)  %></li>
           <li class="list-group-item text-muted">
-            <small><%= time_ago_in_words(tweet.created_at) %> ago</small>
+            <small><%= link_to time_ago_in_words(tweet.created_at), tweet %> ago</small>
             <% link_to 'rt', create_rt_tweet_path(tweet), method: :post %>
             <% tweet.retweet&.id %>
             <% tweet.retweets.count %>
@@ -43,6 +45,7 @@
             <% else %>
               <%= link_to 'Like', tweet_likes_path(tweet, like.first), method: :post %>
             <% end %> 
+            <% link_to 'Eliminar', tweets_path(tweet), method: :delete, data: { confirm: 'Are you  sure?' } %>
 
             <!-- Retweet -->
             <span>Retweets:<%= tweet.retweets.count %> </span>
@@ -58,7 +61,6 @@
         
         <!-- <% link_to 'Show', tweet, class: "btn btn-primary" %>
         <% link_to 'Edit', edit_tweet_path(tweet) %> -->
-        <% link_to 'Eliminar', tweet, method: :delete, data: { confirm: 'Are you  sure?' } %>
       <% end %>
   
       <span><%= paginate @tweets %></span>

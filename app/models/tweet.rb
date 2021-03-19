@@ -5,4 +5,10 @@ class Tweet < ApplicationRecord
   belongs_to :retweet, class_name: "Tweet", optional: true
   validates :content, presence: true
  
+  def hashtag_search()
+    content.split(' ').each do |word|
+      puts word
+    end
+    content[0]
+   end
 end
