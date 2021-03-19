@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :friends
 
   scope :tweets_for_me, ->(friends_ids) { Tweet.where(user_id: friends_ids) }
-  
+
   def is_friend_with(user)
     Friend.where(user_id: self.id, friend_id: user.id).present? 
   end
