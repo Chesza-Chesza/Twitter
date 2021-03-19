@@ -3,18 +3,18 @@ class TweetsController < ApplicationController
 
   # GET /tweets or /tweets.json
   def index
+    pagination_number = 50
     if current_user
       @tweet = Tweet.new #Crea un tweet en blanco
-      @friends_ids = current_user.friends.pluck(:id)
-      @friends_ids << current_user.id #hace .push
-      @tweets = User.tweets_for_me(@friends_ids).order(created_at: :desc).page(params[:page]).per(50)
+      friends_ids = current_user.friends.pluck(:id) + [current_user.id]
+      @tweets = User.tweets_for_me(friends_ids).order(created_at: :desc).page(params[:page]).per(5)
     else
-      @tweets = Tweet.all.page(params[:page]).per(50)
+      @tweets = Tweet.all.page(params[:page]).per(pagination_number)
     end
     
     @q = params[:q]
       if @q
-        @tweets = @tweets.where('content ilike ?', "%#{@q}%").page(params[:page]).per(50)
+        @tweets = Tweet.where('content ilike ?', "%#{@q}%").page(params[:page]).per(pagination_number)
       end
   end
 
