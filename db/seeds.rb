@@ -9,14 +9,11 @@ Like.destroy_all
 Tweet.destroy_all
 User.destroy_all
 
-
-
 25.times do 
   user = User.create(name: Faker::Twitter.user[:name], email: Faker::Internet.email, password: 123123, picture: Faker::Twitter.user[:profile_image_url_https])
   puts "The #{user.name} was created"
-  
-  4.times do 
-      tweet = Tweet.create!(content: Faker::Twitter.status[:text], user: user)
+  6.times do
+      tweet = Tweet.create!(content: Faker::Twitter.status[:text], image: Faker::LoremFlickr.image["https://loremflickr.com/300/300"], user: user)
       puts "The #{tweet.id} was created"
-  end    
-endAdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+  end   
+end

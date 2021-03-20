@@ -1,4 +1,5 @@
 class TweetsController < ApplicationController
+  before_action :authenticate_user!, :except => [:index]
   before_action :set_tweet, only: %i[ show edit update destroy create_rt ]
 
   # GET /tweets or /tweets.json
@@ -7,7 +8,7 @@ class TweetsController < ApplicationController
     if current_user
       @tweet = Tweet.new #Crea un tweet en blanco
       friends_ids = current_user.friends.pluck(:id) + [current_user.id]
-      @tweets = User.tweets_for_me(friends_ids).order(created_at: :desc).page(params[:page]).per(5)
+      @tweets = User.tweets_for_me(friends_ids).order(created_at: :desc).page(params[:page]).per(50)
     else
       @tweets = Tweet.all.page(params[:page]).per(pagination_number)
     end
@@ -74,13 +75,11 @@ class TweetsController < ApplicationController
     create_rt = params[:tweet][:retweeted]
     
     if create_rt
-      original_tweet_content = Tweet.find(tweet_id).content
-      @tweet.retweeted = true
-      @tweet.original_tweet_id = tweet_id
-      @tweet.contents = original_tweet_content
+      tweet = Tweet.new(user_id: current_user.id, content: @tweet.content)
+      tweet.retweet_id = @tweet.id
     end
     
-    if @tweet.save
+    if tweet.save
       flash[:alert] = "Se creo exitosamente"
       redirect_to root_path
     else

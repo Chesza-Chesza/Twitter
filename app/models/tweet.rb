@@ -8,7 +8,7 @@ class Tweet < ApplicationRecord
   def hashtag
     words = content.split(' ')
     new_content = words.map do |word|
-      if word.include?(word)
+      if word.include?('#')
         hash = word.split('#').last
         "<a href='/tweets?q=#{hash}'>#{word}</a>"
       else
