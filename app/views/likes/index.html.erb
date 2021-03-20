@@ -1,29 +1,32 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <p id="notice"><%= notice %></p>
 
-<h1>Likes</h1>
+  <h1>Likes</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Tweet</th>
-      <th>User</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @likes.each do |like| %>
+  <table>
+    <thead>
       <tr>
-        <td><%= like.tweet_id %></td>
-        <td><%= like.user_id %></td>
-        <td><%= link_to 'Show', like %></td>
-        <td><%= link_to 'Edit', edit_tweets_like_path(tweet,like) %></td>
-        <td><%= link_to 'Destroy', like, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Tweet</th>
+        <th>User</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @likes.each do |like| %>
+        <tr>
+          <td><%= like.tweet_id %></td>
+          <td><%= like.user_id %></td>
+          <td><%= link_to 'Show', like %></td>
+          <td><%= link_to 'Edit', edit_tweets_like_path(tweet,like) %></td>
+          <td><%= link_to 'Destroy', like, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<%= link_to 'New Like', new_tweets_like_path(tweet) %>
+  <br>
+
+  <%= link_to 'New Like', new_tweets_like_path(tweet) %>
+
+</div>

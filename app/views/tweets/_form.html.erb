@@ -1,5 +1,5 @@
 <div class="container">
-  <%= form_with(model: tweet, local: true) do |form| %>
+  <%= form_with(model: tweet) do |form| %>
     <% if tweet.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(tweet.errors.count, "error") %> prohibited this tweet from being saved:</h2>
@@ -13,15 +13,10 @@
     <% end %>
 
     
-    <div class="form-group">
-      <%= form.label :content %>
-      <%= form.text_area :content %>
-    </div>
-
-    <div class="form-group">
-      <%= form.label :image %>
-      <%= form.text_field :image %>
-    </div>
+      <div class="form-group my-5">
+      <%= form.text_area :content, class:'form-control form-control-lg', placeholder: 'What are you thinking?'%><br>
+      <%= form.text_field :image, class:'form-control form-control-sm"', placeholder: 'Show us something cool'%><br>
+      </div>
 
     <div class="actions">
       <%= form.submit %>

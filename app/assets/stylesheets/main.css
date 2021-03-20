@@ -1,32 +1,46 @@
-    body {
-        margin: 0 auto;
-    }
-    
-    .navbar {
-        background-color: #33ccff;
-    }
-    
-    .navbar a {
-        color: white;
-        text-decoration: none;
-    }
-    
-    .tweet-cont {
-        margin: 0 auto;
-        max-width: 750px;
-    }
-    
-    ul li {
-        list-style-type: none;
-    }
-    
-    .card-img-top {
-        width: 100%;
-        min-height: 15vw;
-        object-fit: cover;
-    }
-    
-    .btn {
-        background-color: #33ccff;
-        color: white;
-    }
+html,
+body {
+    font-family: 'Lato', sans-serif;
+    margin: 0 auto;
+    background-color: #33ccff;
+    height: 100%;
+}
+
+.home_title {
+    color: #33ccff;
+}
+
+#green {
+    text-align: left;
+    height: 100%;
+    background: white;
+    text-align: center;
+    color: gray;
+}
+
+#green li {
+    list-style-type: none;
+    margin: 15px 0;
+    font-weight: 400;
+}
+
+#green li a {
+    text-decoration: none;
+}
+
+.tweet-cont {
+    margin: 0 auto;
+    max-width: 416px;
+}
+
+.card-img-top {
+    width: 100%;
+    min-height: 15vw;
+    object-fit: cover;
+}
+
+.btn {
+    background-color: #33ccff !important;
+    color: white;
+    list-style-type: none;
+}
